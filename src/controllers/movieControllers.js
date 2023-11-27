@@ -45,7 +45,7 @@ const getMovieById = (req, res) => {
   database
     .query("select * from movies where id = ?", [id])
     .then(([movies]) => {
-      if (movies.length !== 0) {
+      if (movies[0] != null) {
         res.json(movies);
       } else {
         res.status(404).send("Not Found");
