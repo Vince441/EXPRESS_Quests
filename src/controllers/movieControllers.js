@@ -1,36 +1,9 @@
-// const movies = [
-//   {
-//     id: 1,
-//     title: "Citizen Kane",
-//     director: "Orson Wells",
-//     year: "1941",
-//     color: false,
-//     duration: 120,
-//   },
-//   {
-//     id: 2,
-//     title: "The Godfather",
-//     director: "Francis Ford Coppola",
-//     year: "1972",
-//     color: true,
-//     duration: 180,
-//   },
-//   {
-//     id: 3,
-//     title: "Pulp Fiction",
-//     director: "Quentin Tarantino",
-//     year: "1994",
-//     color: true,
-//     duration: 180,
-//   },
-// ];
-
 
 const database = require("../../database");
 
 const postMovie = (req, res) => {
-  console.log(req.body);
   const { title, director, year, color, duration } = req.body;
+
   database
     .query(
       "INSERT INTO movies(title, director, year, color, duration) VALUES (?,?,?,?,?)",
@@ -46,18 +19,19 @@ const postMovie = (req, res) => {
 };
 
 const updateMovie = (req, res) => {
-  console.log(req.body);
+  const id = parseInt(req.params.id);
   const { title, director, year, color, duration } = req.body;
+
   database
     .query(
-      "INSERT INTO movies(title, director, year, color, duration) VALUES (?,?,?,?,?)",
-      [title, director, year, color, duration]
+      "update movies set title = ?, director = ?, year = ?, color = ?, duration = ? where id = ?",
+      [title, director, year, color, duration, id]
     )
-    .then(([results]) => {
-      if (results.affecteRows === 0) {
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
         res.sendStatus(404);
       } else {
-        res.status(204);
+        res.sendStatus(204);
       }
     })
     .catch((err) => {
@@ -65,7 +39,6 @@ const updateMovie = (req, res) => {
       res.sendStatus(500);
     });
 };
-
 
 
 const getMovies = (req, res) => {

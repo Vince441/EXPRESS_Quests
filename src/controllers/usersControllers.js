@@ -3,7 +3,6 @@ const database = require("../../database");
 
 
 const postUsers = (req, res) => {
-  console.log(req.body);
   const { firstname, lastname, email, city, language } = req.body;
   database
     .query(
@@ -20,19 +19,22 @@ const postUsers = (req, res) => {
 };
 
 
+// 
+
 const updateUsers = (req, res) => {
-  console.log(req.body);
+  const id = parseInt(req.params.id);
   const { firstname, lastname, email, city, language } = req.body;
+
   database
     .query(
-      "INSERT INTO users(firstname, lastname, email, city, language) VALUES (?,?,?,?,?)",
+      "update movies set firstname = ?, lastname = ?, email = ?, city = ?, language = ? where id = ?",
       [firstname, lastname, email, city, language]
     )
     .then(([result]) => {
-      if (result.affecteRows === 0) {
+      if (result.affectedRows === 0) {
         res.sendStatus(404);
       } else {
-        res.status(204);
+        res.sendStatus(204);
       }
     })
     .catch((err) => {
@@ -40,7 +42,6 @@ const updateUsers = (req, res) => {
       res.sendStatus(500);
     });
 };
-
 
 
 
