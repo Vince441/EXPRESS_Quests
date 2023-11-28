@@ -1,6 +1,7 @@
 const database = require("../../database");
 
 
+
 const postUsers = (req, res) => {
   console.log(req.body);
   const { firstname, lastname, email, city, language } = req.body;
