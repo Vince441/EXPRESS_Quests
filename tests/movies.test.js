@@ -14,8 +14,7 @@ const newMovie = {
   color : "1",
   duration : 120,
 
-};
-
+}
 const response = await request(app).post("/api/movies").send(newMovie);
 
     expect(response.headers["content-type"]).toMatch(/json/);
@@ -46,6 +45,8 @@ const response = await request(app).post("/api/movies").send(newMovie);
     expect(response.status).toEqual(500);
   });
 });
+
+
 
 
 

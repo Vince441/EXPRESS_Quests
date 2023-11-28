@@ -20,6 +20,28 @@ const postUsers = (req, res) => {
 };
 
 
+const updateUsers = (req, res) => {
+  console.log(req.body);
+  const { firstname, lastname, email, city, language } = req.body;
+  database
+    .query(
+      "INSERT INTO users(firstname, lastname, email, city, language) VALUES (?,?,?,?,?)",
+      [firstname, lastname, email, city, language]
+    )
+    .then(([result]) => {
+      if (result.affecteRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.status(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+
 
 
 const getUsers = (req, res) => {
@@ -56,4 +78,5 @@ module.exports = {
     getUsers,
     getUsersById,
     postUsers,
+    updateUsers,
 };
