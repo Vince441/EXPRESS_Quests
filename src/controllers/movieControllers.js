@@ -25,6 +25,23 @@
 //   },
 // ];
 
+const postMovie = (req, res) => {
+  console.log(req.body);
+  const { title, director, year, color, duration } = req.body;
+  database
+    .query(
+      "INSERT INTO movies(title, director, year, color, duration) VALUES (?,?,?,?,?)",
+      [title, director, year, color, duration]
+    )
+    .then(([results]) => {
+      res.status(201).send({ id : results.insertId })
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const database = require("../../database");
 
 const getMovies = (req, res) => {
@@ -60,4 +77,5 @@ const getMovieById = (req, res) => {
 module.exports = {
   getMovies,
   getMovieById,
+  postMovie,
 };
