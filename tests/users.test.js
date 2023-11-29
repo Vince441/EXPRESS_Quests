@@ -68,7 +68,7 @@ const response = await request(app).post("/api/users").send(newUsers);
       .post("/api/users")
       .send(usersWithMissingProps);
 
-    expect(response.status).toEqual(500);
+      expect(response.status).toEqual(422);
   });
 });
 

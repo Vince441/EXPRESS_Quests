@@ -140,6 +140,6 @@ it("should return no movie", async () => {
 
   const response = await request(app).put("/api/movies/0").send(newMovie);
 
-  expect(response.status).toEqual(404);
+  expect(response.status).toEqual(422);
 });
 });
