@@ -1,3 +1,6 @@
+
+
+
 const validateMovie = (req, res, next) => {
     const { title, director, year, color, duration } = req.body;
     const errors = [];
