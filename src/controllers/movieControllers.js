@@ -119,5 +119,5 @@ module.exports = {
   getMovieById,
   postMovie,
   updateMovie,
-  deleteMovie,}
-};
+  deleteMovie,};
+
