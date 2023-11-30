@@ -144,3 +144,19 @@ it("should return no movie", async () => {
 });
 });
 
+
+describe("DELETE /api/movies/:id", () => {
+  it("should delete one movie", async () => {
+    const response = await request(app).get("/api/movies/1");
+
+    expect(response.headers["content-type"]).toMatch(/json/);
+
+    expect(response.status).toEqual(200);
+  });
+
+  it("should delete no movie", async () => {
+    const response = await request(app).get("/api/movies/0");
+
+    expect(response.status).toEqual(404);
+  });
+});

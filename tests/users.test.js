@@ -146,3 +146,20 @@ it("should return no User", async () => {
   expect(response.status).toEqual(404);
 });
 });
+
+
+describe("DELETE /api/users/:id", () => {
+  it("should delete one users", async () => {
+    const response = await request(app).get("/api/users/1");
+
+    expect(response.headers["content-type"]).toMatch(/json/);
+
+    expect(response.status).toEqual(200);
+  });
+
+  it("should delete no users", async () => {
+    const response = await request(app).get("/api/users/0");
+
+    expect(response.status).toEqual(404);
+  });
+});

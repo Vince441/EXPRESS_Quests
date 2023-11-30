@@ -25,4 +25,7 @@ app.put("/api/movies/:id",validateMovie, movieControllers.updateMovie);
 app.put("/api/users/:id",validateUser, usersControllers.updateUsers);
 
 
+app.delete("/api/movies/:id", movieControllers.deleteMovie);
+app.delete("/api/users/:id", usersControllers.deleteUsers);
+
 module.exports = app;
