@@ -150,18 +150,39 @@ it("should return no User", async () => {
 });
 
 
-describe("DELETE /api/users/:id", () => {
-  it("should delete one users", async () => {
-    const response = await request(app).get("/api/users/1");
+describe("DELETE /api/movies/:id", () => {
+  it("should edit users", async () => {
+    const newUsers = {
+      firstname: "Alexandri",
+      lastname: "Depourtouxe",
+      email: `${crypto.randomUUID()}@wild.co`,
+      city: "Montreal",
+      language: "Muette",
+    };
+    const [results] = await database.query(
+      "INSERT INTO users(firstname, lastname, email, city, language) VALUES (?, ?, ?, ?, ?)",
+      [newUsers.firstname, newUsers.lastname, newUsers.email, newUsers.city, newUsers.language]
+    );
+    const id = results.insertId;
 
-    expect(response.headers["content-type"]).toMatch(/json/);
+    const response = await request(app)
+      .delete(`/api/users/${id}`)
+      .send("Delete done");
 
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(204);
+
+    
   });
 
-  it("should delete no users", async () => {
-    const response = await request(app).get("/api/users/0");
+  it("should fail", async () => {
+
+    
+    const response = await request(app)
+    .delete(`/api/users/5000`)
+   
 
     expect(response.status).toEqual(404);
-  });
+  })
+
+
 });

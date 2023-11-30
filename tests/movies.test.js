@@ -16,7 +16,7 @@ describe("GET /api/movies", () => {
 
 describe("GET /api/movies/:id", () => {
   it("should return one movie", async () => {
-    const response = await request(app).get("/api/movies/1");
+    const response = await request(app).get("/api/movies/3");
 
     expect(response.headers["content-type"]).toMatch(/json/);
 
@@ -149,17 +149,40 @@ it("should return no movie", async () => {
 
 
 describe("DELETE /api/movies/:id", () => {
-  it("should delete one movie", async () => {
-    const response = await request(app).get("/api/movies/1");
+  it("should remove movie", async () => {
+    const newMovie = {
+      title: "Avatar",
+      director: "James Cameron",
+      year: "2010",
+      color: "1",
+      duration: 162,
+    };
 
-    expect(response.headers["content-type"]).toMatch(/json/);
+    const [results] = await database.query(
+      "INSERT INTO movies(title, director, year, color, duration) VALUES (?, ?, ?, ?, ?)",
+      [newMovie.title, newMovie.director, newMovie.year, newMovie.color, newMovie.duration]
+    );
 
-    expect(response.status).toEqual(200);
+    const id = results.insertId;
+
+    const response = await request(app)
+      .delete(`/api/movies/${id}`)
+      .send("Delete done");
+
+    expect(response.status).toEqual(204);
+
+    
   });
 
-  it("should delete no movie", async () => {
-    const response = await request(app).get("/api/movies/0");
+  it("should fail", async () => {
+
+    
+    const response = await request(app)
+    .delete(`/api/movies/5000`)
+   
 
     expect(response.status).toEqual(404);
-  });
+  })
+
+
 });
