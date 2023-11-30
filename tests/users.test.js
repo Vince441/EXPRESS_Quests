@@ -69,6 +69,7 @@ const response = await request(app).post("/api/users").send(newUsers);
       .send(usersWithMissingProps);
 
       expect(response.status).toEqual(422);
+
   });
 });
 
@@ -131,6 +132,7 @@ describe("PUT /api/users/:id", () => {
       .send(userWithMissingProps);
 
     expect(response.status).toEqual(422);
+
 });
 it("should return no User", async () => {
   newUsers = {
